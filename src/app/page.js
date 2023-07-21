@@ -23,7 +23,14 @@ export default function Home() {
 
   const deleteTask = (taskId) => {
     const newTasks = tasks.filter((task) => task.id !== taskId);
-    setDone(Done - 1);
+
+    const newTasks2 = structuredClone(tasks);
+    const task = newTasks2.find((x) => x.id === taskId);
+
+    if (task.completed) {
+      setDone(Done - 1);
+    }
+
     setAll(All - 1);
     setTasks(newTasks);
   };

@@ -11,14 +11,19 @@ export default function Home() {
   //tasks = array of {id: string, title: string, completed: boolean}
   const [tasks, setTasks] = useState([]);
 
+  const [All, setAll] = useState(0);
+  const [Done, setDone] = useState(0);
+
   const addTask = (newTaskTitle) => {
     const newTask = { id: nanoid(), title: newTaskTitle, completed: false };
     const newTasks = [...tasks, newTask];
+    setAll(All + 1);
     setTasks(newTasks);
   };
 
   const deleteTask = (taskId) => {
     const newTasks = tasks.filter((task) => task.id !== taskId);
+    setAll(All - 1);
     setTasks(newTasks);
   };
 
@@ -28,6 +33,11 @@ export default function Home() {
     const newTasks = structuredClone(tasks);
     //search for a task based on condition
     const task = newTasks.find((x) => x.id === taskId);
+    if (task.completed) {
+      setDone(Done - 1);
+    } else {
+      setDone(Done + 1);
+    }
     task.completed = !task.completed;
     setTasks(newTasks);
   };
@@ -41,7 +51,7 @@ export default function Home() {
       <div style={{ maxWidth: "400px" }} className="mx-auto">
         {/* Task summary */}
         <p className="text-center text-secondary fst-italic">
-          All (...) Done (...)
+          All ({All}) Done ({Done})
         </p>
         {/* task input */}
         <TaskInput addTaskFunc={addTask} />
@@ -60,7 +70,7 @@ export default function Home() {
       </div>
 
       {/* //footer section */}
-      <Footer year="2023" fullName="Chayanin Suatap" studentId="12345678" />
+      <Footer year="2023" fullName="Borwonpak Duangjun" studentId="650610779" />
     </div>
   );
 }
